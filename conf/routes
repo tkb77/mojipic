@@ -13,3 +13,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /login                         controllers.OAuthController.login
 GET     /logout                        controllers.OAuthController.logout
 GET     /oauth_callback                controllers.OAuthController.oauthCallback(oauth_verifier: Option[String])
+
+# REST API
++ nocsrf
+POST    /pictures                      controllers.PicturesController.post

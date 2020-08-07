@@ -12,6 +12,14 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0
 libraryDependencies += ehcache
 libraryDependencies += "javax.xml.bind" % "jaxb-api" % "2.3.1"
 libraryDependencies += "org.twitter4j" % "twitter4j-core" % "4.0.6"
+libraryDependencies += jdbc
+libraryDependencies += evolutions
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc"  % "3.5.0"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-config" % "3.5.0"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-play-dbapi-adapter" % "2.8.0-scalikejdbc-3.5"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
+libraryDependencies += "net.debasishg" %% "redisclient" % "3.30"
+libraryDependencies += "org.im4java" % "im4java" % "1.4.0"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "jp.ed.nnn.controllers._"

@@ -7,4 +7,5 @@ target
 /.settings
 /RUNNING_PID
 node_modules
-conf/application.conf
+filesystem
+./conf/application.conf

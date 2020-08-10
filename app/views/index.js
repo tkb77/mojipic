@@ -45,6 +45,14 @@ class Pictures extends React.Component {
 
   componentDidMount() {
     this.updatePictures();
+    this.timerID = setInterval(
+        () => this.updatePictures(),
+        5000
+      );
+    }
+  
+    componentWillUnmount() {
+      clearInterval(this.timerID);
   }
 
   updatePictures() {
@@ -64,6 +72,8 @@ class Pictures extends React.Component {
         pictures: pictures.concat(prevState.pictures)
       }));
     });
+
+    $('.dz-preview').hide('slow', function () { $(this).remove(); }); // 最新を読み込んだらアップロード実行したサムネは消す
   }
 
   /**

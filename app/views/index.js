@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'materialize-css';
 import Dropzone from 'dropzone';
 import React from 'react';
@@ -32,3 +31,71 @@ $(function () {
   // Materialized Menu
   $('.button-collapse').sideNav();
 }); // end of document ready
+
+/**
+ * Reactの画像表示エリア部品定義
+ */
+class Pictures extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.lastCreatedTime = null; // 最後に描画したもののcreatedDateの文字列 例: "2015-03-02T00:00:00.000+09:00"
+    this.state = { pictures: [] };
+  }
+
+  componentDidMount() {
+    this.updatePictures();
+  }
+
+  updatePictures() {
+    var url = '';
+    if (Mojipic.twitterId()) { // 認証時
+      url = `/users/${Mojipic.twitterId().toString()}/properties`;
+    } else { // 非認証時
+      url = '/properties';
+    }
+
+    fetch(this.appendLastCreatedDate(url)).then((res) => res.json()).then((json) => {
+      const pictures = json.filter((p) => p.value.status === 'Success');
+      if (pictures.length > 0) {
+        this.lastCreatedTime = pictures[0].value.createdTime;
+      }
+      this.setState((prevState, props) => ({
+        pictures: pictures.concat(prevState.pictures)
+      }));
+    });
+  }
+
+  /**
+  * もしlastCreatedTimeもしが存在すればurlにパラメータを追加する
+  * @param url {String}
+  * @returns {String}
+  */
+  appendLastCreatedDate(url) {
+    if (this.lastCreatedTime) { // すでに読み込んでいるもの以降のものを読み込む
+      url = url + '?last_created_time=' + encodeURIComponent(this.lastCreatedTime);
+    }
+    return url;
+  }
+
+  render() {
+    const pictureItems = this.state.pictures.map((picture) =>
+      <div className="col s3" key={picture.id}>
+        <div className="card">
+          <div className="card-image">
+            <a href={'/pictures/' + picture.id}>
+              <img src={'/pictures/' + picture.id} height="150px" />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+    return (<div id="picture-grid" className="row center"> {pictureItems} </div>);
+  }
+}
+
+// React Componentのレンダリング
+ReactDOM.render(
+  <Pictures />,
+  document.getElementById('picture-grid')
+);

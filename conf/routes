@@ -17,3 +17,6 @@ GET     /oauth_callback                controllers.OAuthController.oauthCallback
 # REST API
 + nocsrf
 POST    /pictures                      controllers.PicturesController.post
+GET     /pictures/:pictureId           controllers.PicturesController.get(pictureId: Long)
+GET     /properties                    controllers.PropertiesController.getAll(last_created_time: Option[String])
+GET     /users/:twitterId/properties   controllers.UsersController.getProperties(twitterId: Long, last_created_time: Option[String])
